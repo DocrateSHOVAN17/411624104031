@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formula 1 Fan Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,600;0,800;1,800&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red: #E10600;
+      --red-dark: #9B0400;
+      --black: #0a0a0a;
+      --surface: #111111;
+      --surface-2: #1a1a1a;
+      --surface-3: #222222;
+      --border: rgba(255,255,255,0.07);
+      --border-accent: rgba(225,6,0,0.4);
+      --text: #f0f0f0;
+      --muted: #888888;
+      --white: #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--text);
+      font-family: 'Barlow', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* HEADER */
+    header {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 6vw 8vh;
+      overflow: hidden;
+      background: var(--black);
+    }
+
+    .header-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 70% 50%, rgba(225,6,0,0.12) 0%, transparent 70%),
+        repeating-linear-gradient(90deg, transparent 0px, transparent 59px, rgba(255,255,255,0.02) 60px),
+        repeating-linear-gradient(0deg, transparent 0px, transparent 59px, rgba(255,255,255,0.02) 60px);
+      z-index: 0;
+    }
+
+    .header-stripe {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: var(--red);
+    }
+
+    .header-year {
+      position: absolute;
+      top: 2.5rem;
+      right: 6vw;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(8rem, 18vw, 22rem);
+      font-weight: 800;
+      color: rgba(255,255,255,0.03);
+      line-height: 1;
+      user-select: none;
+      z-index: 0;
+    }
+
+    .header-eyebrow {
+      position: relative;
+      z-index: 1;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.25em;
+      color: var(--red);
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .header-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 2rem;
+      height: 2px;
+      background: var(--red);
+    }
+
+    header h1 {
+      position: relative;
+      z-index: 1;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(3.5rem, 9vw, 9rem);
+      font-weight: 800;
+      line-height: 0.9;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 2rem;
+    }
+
+    header h1 em {
+      font-style: italic;
+      color: var(--red);
+    }
+
+    header p {
+      position: relative;
+      z-index: 1;
+      font-size: 1rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      max-width: 40ch;
+    }
+
+    .header-scroll {
+      position: absolute;
+      bottom: 3rem;
+      right: 6vw;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--muted);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 4rem;
+      background: linear-gradient(to bottom, var(--red), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 1; }
+    }
+
+    /* NAV */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10,10,10,0.92);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 6vw;
+      height: 64px;
+    }
+
+    .nav-logo {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      color: var(--white);
+      text-transform: uppercase;
+      margin-right: auto;
+    }
+
+    .nav-logo span { color: var(--red); }
+
+    nav a {
+      text-decoration: none;
+      color: var(--muted);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0 1.25rem;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      transition: color 0.2s;
+      border-bottom: 2px solid transparent;
+    }
+
+    nav a:hover { color: var(--white); border-bottom-color: var(--red); }
+
+    /* MAIN */
+    main { padding: 0 6vw; }
+
+    /* SECTIONS */
+    section {
+      padding: 7rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.25em;
+      color: var(--red);
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .section-label::before {
+      content: '';
+      display: inline-block;
+      width: 1.5rem;
+      height: 2px;
+      background: var(--red);
+    }
+
+    h2 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--white);
+      line-height: 0.95;
+      margin-bottom: 3rem;
+    }
+
+    /* HOME SECTION */
+    #home .home-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    #home .home-text p {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: #aaaaaa;
+      margin-bottom: 2rem;
+    }
+
+    .stat-row {
+      display: flex;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .stat {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .stat-num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1;
+    }
+
+    .stat-num span { color: var(--red); }
+
+    .stat-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-top: 0.25rem;
+    }
+
+    .home-image-slot {
+      aspect-ratio: 4/3;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      color: var(--muted);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .home-image-slot::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(225,6,0,0.03) 10px, rgba(225,6,0,0.03) 20px);
+    }
+
+    .img-icon {
+      font-size: 2.5rem;
+      opacity: 0.3;
+    }
+
+    /* HIGHLIGHTS */
+    #highlights .video-wrapper {
+      position: relative;
+      aspect-ratio: 16/9;
+      max-width: 900px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .video-wrapper::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(225,6,0,0.02) 10px, rgba(225,6,0,0.02) 20px);
+    }
+
+    .play-btn {
+      position: relative;
+      z-index: 1;
+      width: 80px;
+      height: 80px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .play-btn:hover {
+      border-color: var(--red);
+      background: rgba(225,6,0,0.1);
+    }
+
+    .play-btn svg { margin-left: 4px; }
+
+    .video-label {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      z-index: 1;
+      padding: 1rem 1.5rem;
+      background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    /* DRIVERS TABLE */
+    #drivers .table-wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead tr {
+      border-bottom: 1px solid var(--red);
+    }
+
+    th {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      text-transform: uppercase;
+      padding: 0 1.5rem 1rem 0;
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    td {
+      padding: 1.25rem 1.5rem 1.25rem 0;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+      font-size: 0.95rem;
+    }
+
+    tbody tr { transition: background 0.15s; }
+    tbody tr:hover { background: rgba(255,255,255,0.02); }
+
+    .driver-num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: rgba(255,255,255,0.12);
+      min-width: 3rem;
+      display: inline-block;
+    }
+
+    .driver-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--white);
+      letter-spacing: 0.02em;
+    }
+
+    .champ-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--red);
+    }
+
+    .champ-icon { font-size: 0.9rem; }
+
+    /* TEAMS */
+    #teams .teams-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-bottom: 4rem;
+    }
+
+    .team-card {
+      background: var(--surface);
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.2s;
+    }
+
+    .team-card:hover { background: var(--surface-2); }
+
+    .team-pos {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 5rem;
+      font-weight: 800;
+      color: rgba(255,255,255,0.04);
+      position: absolute;
+      top: -1rem;
+      right: 1rem;
+      line-height: 1;
+      user-select: none;
+    }
+
+    .team-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--white);
+      text-transform: uppercase;
+      position: relative;
+      z-index: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .team-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      position: relative;
+      z-index: 1;
+    }
+
+    .team-card-accent {
+      position: absolute;
+      bottom: 0; left: 0;
+      height: 3px;
+      width: 0;
+      background: var(--red);
+      transition: width 0.3s ease;
+    }
+
+    .team-card:hover .team-card-accent { width: 100%; }
+
+    h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 1.5rem;
+    }
+
+    .circuits-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .circuit-item {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 1.25rem 0;
+      border-bottom: 1px solid var(--border);
+      transition: padding-left 0.2s;
+      cursor: default;
+    }
+
+    .circuit-item:hover { padding-left: 0.5rem; }
+
+    .circuit-num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.75rem;
+      color: var(--red);
+      letter-spacing: 0.1em;
+      min-width: 2rem;
+    }
+
+    .circuit-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--white);
+      text-transform: uppercase;
+    }
+
+    .circuit-country {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+    }
+
+    /* CONTACT */
+    #contact .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      gap: 6rem;
+    }
+
+    .contact-intro p {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--muted);
+      margin-bottom: 2rem;
+    }
+
+    .contact-intro strong {
+      display: block;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+    }
+
+    form { display: flex; flex-direction: column; gap: 1.5rem; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    input[type="email"],
+    input[type="password"],
+    select {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 0.85rem 1rem;
+      font-family: 'Barlow', sans-serif;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+
+    input[type="email"]:focus,
+    input[type="password"]:focus,
+    select:focus { border-color: var(--red); }
+
+    select {
+      appearance: none;
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23888' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      padding-right: 2.5rem;
+    }
+
+    select option { background: var(--surface-3); }
+
+    .radio-group, .check-group {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .radio-label, .check-label {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      cursor: pointer;
+      font-size: 0.9rem;
+      color: var(--text);
+      letter-spacing: 0;
+      text-transform: none;
+      font-family: 'Barlow', sans-serif;
+    }
+
+    input[type="radio"],
+    input[type="checkbox"] {
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: var(--surface-2);
+      cursor: pointer;
+      position: relative;
+      flex-shrink: 0;
+      transition: border-color 0.2s;
+    }
+
+    input[type="radio"] { border-radius: 50%; }
+
+    input[type="radio"]:checked,
+    input[type="checkbox"]:checked {
+      border-color: var(--red);
+      background: var(--red);
+    }
+
+    input[type="radio"]:checked::after {
+      content: '';
+      position: absolute;
+      width: 6px; height: 6px;
+      background: white;
+      border-radius: 50%;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    input[type="checkbox"]:checked::after {
+      content: '✓';
+      position: absolute;
+      font-size: 11px;
+      color: white;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      line-height: 1;
+    }
+
+    button[type="submit"] {
+      background: var(--red);
+      color: var(--white);
+      border: none;
+      padding: 1rem 2.5rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      width: fit-content;
+      transition: background 0.2s, transform 0.1s;
+    }
+
+    button[type="submit"]:hover { background: #c00500; }
+    button[type="submit"]:active { transform: scale(0.98); }
+
+    /* FOOTER */
+    footer {
+      padding: 3rem 6vw;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-logo {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      color: var(--white);
+      text-transform: uppercase;
+    }
+
+    .footer-logo span { color: var(--red); }
+
+    footer p {
+      font-size: 0.8rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .footer-links a {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--red); }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    header h1 { animation: fadeUp 0.8s ease both; animation-delay: 0.2s; }
+    header p { animation: fadeUp 0.8s ease both; animation-delay: 0.4s; }
+    .header-eyebrow { animation: fadeUp 0.8s ease both; animation-delay: 0.1s; }
+
+    @media (max-width: 768px) {
+      #home .home-grid,
+      #contact .contact-grid { grid-template-columns: 1fr; }
+      #teams .teams-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      nav a { padding: 0 0.75rem; font-size: 0.7rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header id="home">
+    <div class="header-bg"></div>
+    <div class="header-stripe"></div>
+    <div class="header-year">F1</div>
+
+    <p class="header-eyebrow">Season 2026 · Fan Hub</p>
+    <h1>Formula <em>1</em><br>Fan Hub</h1>
+    <p>News, Teams, Drivers & Race Highlights — All in one place for the true F1 faithful.</p>
+
+    <div class="header-scroll">
+      <div class="scroll-line"></div>
+      Scroll
+    </div>
+  </header>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">F<span>1</span> Hub</div>
+    <a href="#home">Home</a>
+    <a href="#highlights">Highlights</a>
+    <a href="#drivers">Drivers</a>
+    <a href="#teams">Teams</a>
+    <a href="#contact">Join</a>
+  </nav>
+
+  <main>
+
+    <!-- HOME / INTRO -->
+    <section>
+      <div class="section-label">Featured Driver</div>
+      <div class="home-grid">
+        <div class="home-text">
+          <h2>Max<br>Verstappen</h2>
+          <p>The Dutch prodigy from Red Bull Racing remains one of the most dominant forces in Formula 1 history. With four World Championships to his name, Verstappen's aggressive racecraft and relentless pursuit of perfection have redefined what it means to be a champion in the modern era.</p>
+          <div class="stat-row">
+            <div class="stat">
+              <div class="stat-num">4<span>×</span></div>
+              <div class="stat-label">World Titles</div>
+            </div>
+            <div class="stat">
+              <div class="stat-num">62<span>+</span></div>
+              <div class="stat-label">Race Wins</div>
+            </div>
+            <div class="stat">
+              <div class="stat-num">1</div>
+              <div class="stat-label">Team: Red Bull</div>
+            </div>
+          </div>
+        </div>
+        <div class="home-image-slot">
+          <div class="img-icon">🏎</div>
+          <span>Driver Image</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- RACE HIGHLIGHTS -->
+    <section id="highlights">
+      <div class="section-label">Latest Content</div>
+      <h2>Race<br>Highlights</h2>
+      <div class="video-wrapper">
+        <div class="play-btn">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M8 5.5L19 12L8 18.5V5.5Z" fill="white"/>
+          </svg>
+        </div>
+        <div class="video-label">Race Highlights · Season 2026</div>
+      </div>
+    </section>
+
+    <!-- DRIVERS -->
+    <section id="drivers">
+      <div class="section-label">2026 Grid</div>
+      <h2>Driver<br>Statistics</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Driver</th>
+              <th>Team</th>
+              <th>Nationality</th>
+              <th>Championships</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="driver-num">1</span></td>
+              <td><span class="driver-name">Max Verstappen</span></td>
+              <td>Red Bull Racing</td>
+              <td>🇳🇱 Dutch</td>
+              <td><span class="champ-badge"><span class="champ-icon">★</span> 4</span></td>
+            </tr>
+            <tr>
+              <td><span class="driver-num">44</span></td>
+              <td><span class="driver-name">Lewis Hamilton</span></td>
+              <td>Ferrari</td>
+              <td>🇬🇧 British</td>
+              <td><span class="champ-badge"><span class="champ-icon">★</span> 7</span></td>
+            </tr>
+            <tr>
+              <td><span class="driver-num">16</span></td>
+              <td><span class="driver-name">Charles Leclerc</span></td>
+              <td>Ferrari</td>
+              <td>🇲🇨 Monégasque</td>
+              <td><span class="champ-badge"><span class="champ-icon">★</span> 0</span></td>
+            </tr>
+            <tr>
+              <td><span class="driver-num">63</span></td>
+              <td><span class="driver-name">George Russell</span></td>
+              <td>Mercedes</td>
+              <td>🇬🇧 British</td>
+              <td><span class="champ-badge"><span class="champ-icon">★</span> 0</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- TEAMS & CIRCUITS -->
+    <section id="teams">
+      <div class="section-label">Constructors</div>
+      <h2>Top<br>Teams</h2>
+      <div class="teams-grid">
+        <div class="team-card">
+          <div class="team-pos">1</div>
+          <div class="team-name">Red Bull Racing</div>
+          <div class="team-desc">Milton Keynes · 6× Constructors' Champion</div>
+          <div class="team-card-accent"></div>
+        </div>
+        <div class="team-card">
+          <div class="team-pos">2</div>
+          <div class="team-name">Ferrari</div>
+          <div class="team-desc">Maranello · Most Titles in History</div>
+          <div class="team-card-accent"></div>
+        </div>
+        <div class="team-card">
+          <div class="team-pos">3</div>
+          <div class="team-name">Mercedes</div>
+          <div class="team-desc">Brackley · 8× Constructors' Champion</div>
+          <div class="team-card-accent"></div>
+        </div>
+      </div>
+
+      <h3>Iconic Circuits</h3>
+      <div class="circuits-list">
+        <div class="circuit-item">
+          <span class="circuit-num">01</span>
+          <span class="circuit-name">Monaco</span>
+          <span class="circuit-country">Monte Carlo, Monaco</span>
+        </div>
+        <div class="circuit-item">
+          <span class="circuit-num">02</span>
+          <span class="circuit-name">Silverstone</span>
+          <span class="circuit-country">Northamptonshire, UK</span>
+        </div>
+        <div class="circuit-item">
+          <span class="circuit-num">03</span>
+          <span class="circuit-name">Spa-Francorchamps</span>
+          <span class="circuit-country">Ardennes, Belgium</span>
+        </div>
+        <div class="circuit-item">
+          <span class="circuit-num">04</span>
+          <span class="circuit-name">Suzuka</span>
+          <span class="circuit-country">Mie Prefecture, Japan</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT / SIGN UP -->
+    <section id="contact">
+      <div class="contact-grid">
+        <div class="contact-intro">
+          <div class="section-label">Community</div>
+          <h2>Join<br>the Hub</h2>
+          <p>Become part of the fastest-growing F1 fan community. Get exclusive race updates, driver insights, and behind-the-scenes content — straight to your inbox.</p>
+          <strong>What you get:</strong>
+          <p>✦ Live race alerts<br>✦ Exclusive fan content<br>✦ Community access<br>✦ Driver stats digest</p>
+        </div>
+        <form>
+          <div class="form-row">
+            <div class="field">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" placeholder="your@email.com" required>
+            </div>
+            <div class="field">
+              <label for="password">Password</label>
+              <input type="password" id="password" placeholder="••••••••" required>
+            </div>
+          </div>
+
+          <div class="field">
+            <label>Gender</label>
+            <div class="radio-group">
+              <label class="radio-label">
+                <input type="radio" name="gender" value="male">
+                Male
+              </label>
+              <label class="radio-label">
+                <input type="radio" name="gender" value="female">
+                Female
+              </label>
+              <label class="radio-label">
+                <input type="radio" name="gender" value="other">
+                Prefer not to say
+              </label>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="category">Favourite Category</label>
+            <select id="category">
+              <option value="f1">Formula 1</option>
+              <option value="sports">Sports</option>
+              <option value="tech">Technology</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>Interests</label>
+            <div class="check-group">
+              <label class="check-label">
+                <input type="checkbox" value="football">
+                Football
+              </label>
+              <label class="check-label">
+                <input type="checkbox" value="f1" checked>
+                Formula 1
+              </label>
+              <label class="check-label">
+                <input type="checkbox" value="motogp">
+                MotoGP
+              </label>
+            </div>
+          </div>
+
+          <button type="submit">Sign Up — Join the Grid</button>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">F<span>1</span> Fan Hub</div>
+    <div class="footer-links">
+      <a href="#home">Home</a>
+      <a href="#drivers">Drivers</a>
+      <a href="#teams">Teams</a>
+      <a href="#contact">Join</a>
+    </div>
+    <p>© 2026 Formula 1 Fan Hub. All Rights Reserved.</p>
+  </footer>
+
+</body>
+</html>
