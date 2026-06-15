@@ -90,7 +90,7 @@ button:hover{
 }
 
 
-@media (min-width:768px){
+ (min-width:768px){
 
     nav{
         flex-direction:row;
